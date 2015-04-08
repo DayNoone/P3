@@ -23,6 +23,7 @@ public class Simulator implements Constants
     private Queue cpuQueue, ioQueue;
 	private long maxCpuTime;
 	private CPU cpu;
+    private IO io;
 
 	/**
 	 * Constructs a scheduling simulator with the given parameters.
@@ -51,6 +52,7 @@ public class Simulator implements Constants
         this.ioQueue = ioQueue;
 		this.maxCpuTime = maxCpuTime;
 		cpu = new CPU();
+        io = new IO();
     }
 
     /**
@@ -194,7 +196,8 @@ public class Simulator implements Constants
 	 * Ends the active process, and deallocates any resources allocated to it.
 	 */
 	private void endProcess() {
-		// Incomplete
+        memory.processCompleted((Process) cpuQueue.getNext());
+        cpu.setActiveProcess(null);
 	}
 
 	/**
@@ -202,6 +205,11 @@ public class Simulator implements Constants
 	 * perform an I/O operation.
 	 */
 	private void processIoRequest() {
+        ioQueue.insert(cpu.getActiveProcess());
+        cpu.setActiveProcess(null);
+
+
+
 		// Incomplete
 	}
 
