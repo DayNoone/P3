@@ -138,7 +138,7 @@ public class Simulator implements Constants
 
             // TODO: Add this process to the CPU queue!
             cpuQueue.insert(p);
-            if(p.getAvgIoInterval < p.getCpuTimeNeeded()){
+            if(p.getAvgIoInterval() < p.getCpuTimeNeeded()){
                 eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
             }else if(p.getCpuTimeNeeded() > maxCpuTime){
                 eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
