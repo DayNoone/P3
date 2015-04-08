@@ -20,6 +20,11 @@ public class Process implements Constants
 	private Color color;
 	/** The amount of memory needed by this process */
     private long memoryNeeded;
+
+	public long getCpuTimeNeeded() {
+		return cpuTimeNeeded;
+	}
+
 	/** The amount of cpu time still needed by this process */
     private long cpuTimeNeeded;
 	/** The average time between the need for I/O operations for this process */

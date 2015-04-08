@@ -138,7 +138,6 @@ public class Simulator implements Constants
             cpuQueue.insert(p);
 			// Also add new events to the event queue if needed
 
-
 			// Since we haven't implemented the CPU and I/O device yet,
 			// we let the process leave the system immediately, for now.
 
@@ -152,6 +151,7 @@ public class Simulator implements Constants
 			// Check for more free memory
 			p = memory.checkMemory(clock);
 		}
+
 	}
 
 	/**
