@@ -14,6 +14,9 @@ public class IO {
 
     public void setActiveProcess(Process activeProcess) {
         this.activeProcess = activeProcess;
+        if(activeProcess != null){
+
+        }
     }
 
     public boolean hasActiveProcess(){

@@ -214,10 +214,6 @@ public class Simulator implements Constants
             io.setActiveProcess(ap);
             gui.setIoActive(ap);
         }
-
-
-
-
 		// Incomplete
 	}
 
@@ -226,6 +222,7 @@ public class Simulator implements Constants
 	 * is done with its I/O operation.
 	 */
 	private void endIoOperation() {
+
 		// Incomplete
 	}
 
