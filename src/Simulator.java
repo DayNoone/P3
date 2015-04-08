@@ -21,6 +21,7 @@ public class Simulator implements Constants
 	private long avgArrivalInterval;
 	// Add member variables as needed
     private Queue cpuQueue, ioQueue;
+	private long maxCpuTime;
 
 	/**
 	 * Constructs a scheduling simulator with the given parameters.
@@ -47,6 +48,7 @@ public class Simulator implements Constants
 		// Add code as needed
         this.cpuQueue = cpuQueue;
         this.ioQueue = ioQueue;
+		this.maxCpuTime = maxCpuTime;
     }
 
     /**
