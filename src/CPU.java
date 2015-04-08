@@ -16,4 +16,12 @@ public class CPU {
     public void setActiveProcess(Process activeProcess) {
         this.activeProcess = activeProcess;
     }
+
+    public boolean hasActiveProcess(){
+        if (activeProcess == null){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

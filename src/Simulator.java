@@ -139,14 +139,22 @@ public class Simulator implements Constants
 		while(p != null) {
 
             // TODO: Add this process to the CPU queue!
-            cpuQueue.insert(p);
-            if(p.getAvgIoInterval() < p.getCpuTimeNeeded()){
-                eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
-            }else if(p.getCpuTimeNeeded() > maxCpuTime){
-                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
-            }else{
-                eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
-            }
+
+
+			if (cpu.hasActiveProcess()){
+				cpuQueue.insert(p);
+				Process ap = cpu.getActiveProcess();
+				if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
+					eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
+				}else if(ap.getCpuTimeNeeded() > maxCpuTime){
+					eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
+				}else{
+					eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
+				}
+			}else{
+				cpu.setActiveProcess(p);
+				gui.setCpuActive(p);
+			}
 
 			// Also add new events to the event queue if needed
 
@@ -172,7 +180,7 @@ public class Simulator implements Constants
 	private void switchProcess() {
 
 		Process nextProcess = (Process)cpuQueue.getNext();
-		if (cpu.getActiveProcess() != null){
+		if (cpu.getActiveProcess() != null) {
 			cpuQueue.insert(cpu.getActiveProcess());
 		}else{
 			cpu.setActiveProcess(nextProcess);
