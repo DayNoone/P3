@@ -27,6 +27,11 @@ public class Process implements Constants
 
 	/** The amount of cpu time still needed by this process */
     private long cpuTimeNeeded;
+
+	public long getAvgIoInterval() {
+		return avgIoInterval;
+	}
+
 	/** The average time between the need for I/O operations for this process */
     private long avgIoInterval;
 	/** The time left until the next time this process needs I/O */
