@@ -25,6 +25,10 @@ public class Process implements Constants
 		return cpuTimeNeeded;
 	}
 
+	public void setCpuTimeNeeded(long cpuTimeNeeded) {
+		this.cpuTimeNeeded = cpuTimeNeeded;
+	}
+
 	/** The amount of cpu time still needed by this process */
     private long cpuTimeNeeded;
 

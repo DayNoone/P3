@@ -120,6 +120,8 @@ public class Simulator implements Constants
 	 * Simulates a process arrival/creation.
 	 */
 	private void createProcess() {
+		System.out.println(eventQueue.getSize());
+		System.out.println("createProcess");
 		// Create a new process
 		Process newProcess = new Process(memory.getMemorySize(), clock);
 		memory.insertProcess(newProcess);
@@ -136,26 +138,32 @@ public class Simulator implements Constants
 	 * memory for the processes.
 	 */
 	private void flushMemoryQueue() {
+		System.out.println("flushMemoryQueue");
 		Process p = memory.checkMemory(clock);
 		// As long as there is enough memory, processes are moved from the memory queue to the cpu queue
 		while(p != null) {
 
             // TODO: Add this process to the CPU queue!
 
+			cpuQueue.insert(p);
 
 			if (cpu.hasActiveProcess()){
-				cpuQueue.insert(p);
 				Process ap = cpu.getActiveProcess();
 				if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
+					System.out.println("first");
 					eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
-				}else if(ap.getCpuTimeNeeded() > maxCpuTime){
+				}
+ 				else if(ap.getCpuTimeNeeded() > maxCpuTime){
+					System.out.println("second");
 					eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
 				}else{
+					System.out.println("third");
 					eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
 				}
 			}else{
-				cpu.setActiveProcess(p);
-				gui.setCpuActive(p);
+				Process nextProcess = (Process)cpuQueue.removeNext();
+				cpu.setActiveProcess(nextProcess);
+				gui.setCpuActive(nextProcess);
 			}
 
 			// Also add new events to the event queue if needed
@@ -180,14 +188,18 @@ public class Simulator implements Constants
 	 * Simulates a process switch.
 	 */
 	private void switchProcess() {
+		System.out.println("switchProcess");
 
-		Process nextProcess = (Process)cpuQueue.getNext();
+		Process nextProcess = (Process)cpuQueue.removeNext();
+		Process oldProcess = cpu.getActiveProcess();
+
 		if (cpu.getActiveProcess() != null) {
-			cpuQueue.insert(cpu.getActiveProcess());
-		}else{
-			cpu.setActiveProcess(nextProcess);
-			gui.setCpuActive(nextProcess);
+			oldProcess.setCpuTimeNeeded(oldProcess.getCpuTimeNeeded()-maxCpuTime);
+			cpuQueue.insert(oldProcess);
 		}
+		cpu.setActiveProcess(nextProcess);
+		gui.setCpuActive(nextProcess);
+
 
 		// Incomplete??
 	}
