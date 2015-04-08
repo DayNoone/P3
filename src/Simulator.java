@@ -50,6 +50,7 @@ public class Simulator implements Constants
         this.cpuQueue = cpuQueue;
         this.ioQueue = ioQueue;
 		this.maxCpuTime = maxCpuTime;
+		cpu = new CPU();
     }
 
     /**
@@ -170,7 +171,15 @@ public class Simulator implements Constants
 	 */
 	private void switchProcess() {
 
-		// Incomplete
+		Process nextProcess = (Process)cpuQueue.getNext();
+		if (cpu.getActiveProcess() != null){
+			cpuQueue.insert(cpu.getActiveProcess());
+		}else{
+			cpu.setActiveProcess(nextProcess);
+			gui.setCpuActive(nextProcess);
+		}
+
+		// Incomplete??
 	}
 
 	/**
