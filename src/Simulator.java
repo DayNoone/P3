@@ -20,6 +20,8 @@ public class Simulator implements Constants
 	/** The average length between process arrivals */
 	private long avgArrivalInterval;
 	// Add member variables as needed
+    private Queue cpuQueue;
+    private Queue ioQueue;
 
 	/**
 	 * Constructs a scheduling simulator with the given parameters.
@@ -43,6 +45,8 @@ public class Simulator implements Constants
 		memory = new Memory(memoryQueue, memorySize, statistics);
 		clock = 0;
 		// Add code as needed
+        this.cpuQueue = cpuQueue;
+        this.ioQueue = ioQueue;
     }
 
     /**
@@ -131,6 +135,7 @@ public class Simulator implements Constants
 		while(p != null) {
 			
 			// TODO: Add this process to the CPU queue!
+            cpuQueue.insert(p);
 			// Also add new events to the event queue if needed
 
 			// Since we haven't implemented the CPU and I/O device yet,
