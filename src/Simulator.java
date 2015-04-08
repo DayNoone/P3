@@ -135,9 +135,17 @@ public class Simulator implements Constants
 		Process p = memory.checkMemory(clock);
 		// As long as there is enough memory, processes are moved from the memory queue to the cpu queue
 		while(p != null) {
-			
-			// TODO: Add this process to the CPU queue!
+
+            // TODO: Add this process to the CPU queue!
             cpuQueue.insert(p);
+            if(p.getAvgIoInterval < p.getCpuTimeNeeded()){
+                eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
+            }else if(p.getCpuTimeNeeded() > maxCpuTime){
+                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
+            }else{
+                eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
+            }
+
 			// Also add new events to the event queue if needed
 
 			// Since we haven't implemented the CPU and I/O device yet,
