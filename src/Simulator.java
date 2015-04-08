@@ -196,7 +196,7 @@ public class Simulator implements Constants
 	 * Ends the active process, and deallocates any resources allocated to it.
 	 */
 	private void endProcess() {
-        memory.processCompleted((Process) cpuQueue.getNext());
+        memory.processCompleted(cpu.getActiveProcess());
         cpu.setActiveProcess(null);
 	}
 
@@ -205,8 +205,16 @@ public class Simulator implements Constants
 	 * perform an I/O operation.
 	 */
 	private void processIoRequest() {
-        ioQueue.insert(cpu.getActiveProcess());
+        Process ap = cpu.getActiveProcess();
         cpu.setActiveProcess(null);
+
+        if(io.hasActiveProcess()){
+            ioQueue.insert(ap);
+        }else{
+            io.setActiveProcess(ap);
+            gui.setIoActive(ap);
+        }
+
 
 
 
