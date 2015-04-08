@@ -22,6 +22,7 @@ public class Simulator implements Constants
 	// Add member variables as needed
     private Queue cpuQueue, ioQueue;
 	private long maxCpuTime;
+	private CPU cpu;
 
 	/**
 	 * Constructs a scheduling simulator with the given parameters.
@@ -168,6 +169,7 @@ public class Simulator implements Constants
 	 * Simulates a process switch.
 	 */
 	private void switchProcess() {
+
 		// Incomplete
 	}
 
