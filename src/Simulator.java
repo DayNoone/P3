@@ -235,6 +235,7 @@ public class Simulator implements Constants
 		Process p = cpu.getActiveProcess();
 		statistics.nofTimesInCpuQueue += p.getNofTimesInReadyQueue();
 		statistics.nofTimesInIoQueue += p.getNofTimesInIoQueue();
+		statistics.totalProcessTime += clock - p.getCreationTime();
         cpu.setActiveProcess(null, clock);
         gui.setCpuActive(null);
         memory.processCompleted(p);

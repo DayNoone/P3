@@ -14,6 +14,12 @@ public class Process implements Constants
 	private static long nextProcessId = 1;
 	/** The font used by all processes */
 	private static Font font = new Font("Arial", Font.PLAIN, 10);
+
+	public long getCreationTime() {
+		return creationTime;
+	}
+
+	private final long creationTime;
 	/** The ID of this process */
 	private long processId;
 	/** The color of this process */
@@ -89,6 +95,7 @@ public class Process implements Constants
 		avgIoInterval = (1 + (long)(Math.random()*25))*cpuTimeNeeded/100;
 		// The first and latest event involving this process is its creation
 		timeOfLastEvent = creationTime;
+		this.creationTime = creationTime;
 		// Assign a process ID
 		processId = nextProcessId++;
 		// Assign a pseudo-random color used by the GUI
