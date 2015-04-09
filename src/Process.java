@@ -131,5 +131,9 @@ public class Process implements Constants
 		statistics.nofCompletedProcesses++;
 	}
 
+	public long getProcessID() {
+		return this.processId;
+	}
+
 	// Add more methods as needed
 }

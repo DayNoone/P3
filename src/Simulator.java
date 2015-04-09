@@ -123,7 +123,6 @@ public class Simulator implements Constants
 	 */
 	private void createProcess() {
 		System.out.println(eventQueue.getSize());
-		System.out.println("createProcess");
 		// Create a new process
 		Process newProcess = new Process(memory.getMemorySize(), clock);
 		memory.insertProcess(newProcess);
@@ -140,7 +139,7 @@ public class Simulator implements Constants
 	 * memory for the processes.
 	 */
 	private void flushMemoryQueue() {
-		System.out.println("flushMemoryQueue");
+//		System.out.println("flushMemoryQueue");
 		Process p = memory.checkMemory(clock);
 		// As long as there is enough memory, processes are moved from the memory queue to the cpu queue
 		while(p != null) {
@@ -153,7 +152,7 @@ public class Simulator implements Constants
                 switchProcess();
             }
 
-            System.out.println(eventQueue.getSize());
+//            System.out.println(eventQueue.getSize());
 
 
 
@@ -184,7 +183,7 @@ public class Simulator implements Constants
 
         if(p != null){
             cpuQueue.insert(p);
-            p.setCpuTimeNeeded(p.getCpuTimeNeeded()-maxCpuTime);
+            p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
             cpu.setActiveProcess(null);
             gui.setCpuActive(null);
         }
@@ -194,28 +193,18 @@ public class Simulator implements Constants
             cpu.setActiveProcess(ap);
             gui.setCpuActive(ap);
             if(ap != null){
-                if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
-                    System.out.println("first");
+
+//				if (ap.getProcessID() == 1)
+//					System.out.println("Process: " + Long.toString(ap.getProcessID()) + " cpuTimeNeeded: " + Long.toString(ap.getCpuTimeNeeded()));
+
+				if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
                     eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
                 }
                 else if(ap.getCpuTimeNeeded() > maxCpuTime){
-                    System.out.println("second");
                     eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
                 }else{
-                    System.out.println("third");
                     eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
                 }
-                /*long timeToIo = (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4);
-                if (timeToIo > maxCpuTime && ap.getCpuTimeNeeded() > maxCpuTime) {
-                    System.out.println("SWITCH_PROCESS");
-                    eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
-                }else if (timeToIo > ap.getCpuTimeNeeded()){
-                    System.out.println("END_PROCESS");
-                    eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
-                }else{
-                    System.out.println("IO_REQUEST");
-                    eventQueue.insertEvent(new Event(IO_REQUEST, clock + timeToIo));
-                }*/
             }
         }else{
             cpu.setActiveProcess(null);
@@ -229,7 +218,8 @@ public class Simulator implements Constants
 	 * Ends the active process, and deallocates any resources allocated to it.
 	 */
 	private void endProcess() {
-        Process p = cpu.getActiveProcess();
+		System.out.println("endProcess");
+		Process p = cpu.getActiveProcess();
         memory.processCompleted(p);
         cpu.setActiveProcess(null);
         gui.setCpuActive(null);
@@ -249,7 +239,9 @@ public class Simulator implements Constants
         }else{
             io.setActiveProcess(ap);
             gui.setIoActive(ap);
-            ap.setCpuTimeNeeded(ap.getCpuTimeNeeded()-avgIoTime);
+            ap.setCpuTimeNeeded(ap.getCpuTimeNeeded() - avgIoTime - ap.getAvgIoInterval());
+			if (ap.getCpuTimeNeeded() < 0)
+				ap.setCpuTimeNeeded(0);
             eventQueue.insertEvent(new Event(END_IO, clock + (long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
         }
 
