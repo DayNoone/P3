@@ -22,6 +22,7 @@ public class Simulator implements Constants
 	// Add member variables as needed
     private Queue cpuQueue, ioQueue;
 	private long maxCpuTime;
+    private long avgIoTime;
 	private CPU cpu;
     private IO io;
 
@@ -51,6 +52,7 @@ public class Simulator implements Constants
         this.cpuQueue = cpuQueue;
         this.ioQueue = ioQueue;
 		this.maxCpuTime = maxCpuTime;
+        this.avgIoTime = avgIoTime;
 		cpu = new CPU();
         io = new IO();
     }
@@ -147,24 +149,11 @@ public class Simulator implements Constants
 
 			cpuQueue.insert(p);
 
-			if (cpu.hasActiveProcess()){
-				Process ap = cpu.getActiveProcess();
-				if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
-					System.out.println("first");
-					eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
-				}
- 				else if(ap.getCpuTimeNeeded() > maxCpuTime){
-					System.out.println("second");
-					eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
-				}else{
-					System.out.println("third");
-					eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
-				}
-			}else{
-				Process nextProcess = (Process)cpuQueue.removeNext();
-				cpu.setActiveProcess(nextProcess);
-				gui.setCpuActive(nextProcess);
-			}
+            createEvent();
+
+            System.out.println(eventQueue.getSize());
+
+
 
 			// Also add new events to the event queue if needed
 
@@ -184,7 +173,29 @@ public class Simulator implements Constants
 
 	}
 
-	/**
+    private void createEvent() {
+        if (cpu.hasActiveProcess()){
+            Process ap = cpu.getActiveProcess();
+
+            if((long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4) > maxCpuTime && ap.getAvgIoInterval() > maxCpuTime) {
+                System.out.println("SWITCH_PROCESS");
+                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
+            } else if((long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4) > ap.getCpuTimeNeeded()) {
+                System.out.println("END_PROCESS");
+                eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
+
+            }else{
+                System.out.println("IO");
+                eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
+            }
+        }else{
+            Process nextProcess = (Process)cpuQueue.removeNext();
+            cpu.setActiveProcess(nextProcess);
+            gui.setCpuActive(nextProcess);
+        }
+    }
+
+    /**
 	 * Simulates a process switch.
 	 */
 	private void switchProcess() {
@@ -210,6 +221,7 @@ public class Simulator implements Constants
 	private void endProcess() {
         memory.processCompleted(cpu.getActiveProcess());
         cpu.setActiveProcess(null);
+        gui.setCpuActive(null);
 	}
 
 	/**
@@ -219,12 +231,15 @@ public class Simulator implements Constants
 	private void processIoRequest() {
         Process ap = cpu.getActiveProcess();
         cpu.setActiveProcess(null);
+        gui.setCpuActive(null);
 
         if(io.hasActiveProcess()){
             ioQueue.insert(ap);
         }else{
             io.setActiveProcess(ap);
             gui.setIoActive(ap);
+
+            eventQueue.insertEvent(new Event(END_IO, clock + 1 + avgIoTime));
         }
 		// Incomplete
 	}
@@ -234,6 +249,12 @@ public class Simulator implements Constants
 	 * is done with its I/O operation.
 	 */
 	private void endIoOperation() {
+        cpuQueue.insert(io.getActiveProcess());
+        io.setActiveProcess(null);
+        gui.setIoActive(null);
+
+        createEvent();
+
 
 		// Incomplete
 	}
