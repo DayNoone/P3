@@ -15,7 +15,28 @@ public class Statistics
 	public long memoryQueueLengthTime = 0;
 	/** The largest memory queue length that has occured */
 	public long memoryQueueLargestLength = 0;
-    
+
+    /*
+     Antall ferdige prosesser
+     Antall opprettede prosesser
+     Antall prosessskifter (som skyldes oppbrukt tidskvant)
+     Antall utførte I/O-operasjoner
+     Gjennomsnittlig gjennomstrømning (ferdige prosesser per sekund)
+     Total tid CPU har brukt på å prosessere
+     Total tid CPU har vært ledig
+     Prosentvis hvor mye tid CPU har brukt på å prosessere (utilisasjon)
+     Prosentvis hvor lenge CPU har vært ledig
+     Størst forekommende samt
+     gjennomsnittlig lengde på alle køer
+     Hvor mange ganger en ferdige prosess gjennomsnittlig har blitt plassert i hver enkelt kø
+     Gjennomsnittlig tid tilbrakt i systemet per ferdige prosess
+     Gjennomsnittlig tid ventende på tilstrekkelig lagerplass per ferdige prosess
+     Gjennomsnittlig tid ventende på CPU-kraft per ferdige prosess
+     Gjennomsnittlig tid brukt i CPU per ferdige prosess
+     Gjennomsnittlig tid ventende på I/O-kapasitet per ferdige prosess
+     Gjennomsnittlig tid brukt i I/O per ferdige prosess
+    */
+
 	/**
 	 * Prints out a report summarizing all collected data about the simulation.
 	 * @param simulationLength	The number of milliseconds that the simulation covered.
