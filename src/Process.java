@@ -15,11 +15,18 @@ public class Process implements Constants
 	/** The font used by all processes */
 	private static Font font = new Font("Arial", Font.PLAIN, 10);
 
+	private final long creationTime;
 	public long getCreationTime() {
 		return creationTime;
 	}
 
-	private final long creationTime;
+	private long firstTimeInReadyQueue;
+	public long getFirstTimeInReadyQueue(){
+		return firstTimeInReadyQueue;
+	}
+	public void setFirstTimeInReadyQueue(long t){
+		this.firstTimeInReadyQueue = t;
+	}
 	/** The ID of this process */
 	private long processId;
 	/** The color of this process */

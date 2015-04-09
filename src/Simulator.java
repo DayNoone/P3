@@ -154,7 +154,10 @@ public class Simulator implements Constants
 			System.out.println("WHILE loop");
 
             // TODO: Add this process to the CPU queue!
+
 			cpu.insertQueue(p);
+
+			p.setFirstTimeInReadyQueue(clock);
 
             if(!cpu.hasActiveProcess()){
 				System.out.println("SKJER DETTE?");
@@ -233,10 +236,14 @@ public class Simulator implements Constants
 	private void endProcess() {
 		System.out.println("endProcess");
 		Process p = cpu.getActiveProcess();
+
 		statistics.nofTimesInCpuQueue += p.getNofTimesInReadyQueue();
 		statistics.nofTimesInIoQueue += p.getNofTimesInIoQueue();
 		statistics.totalProcessTime += clock - p.getCreationTime();
-        cpu.setActiveProcess(null, clock);
+
+		statistics.totalReadyWaitingTime += p.getFirstTimeInReadyQueue() - p.getCreationTime();
+
+				cpu.setActiveProcess(null, clock);
         gui.setCpuActive(null);
         memory.processCompleted(p);
 	}
