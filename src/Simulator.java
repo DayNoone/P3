@@ -176,17 +176,16 @@ public class Simulator implements Constants
     private void createEvent() {
         if (cpu.hasActiveProcess()){
             Process ap = cpu.getActiveProcess();
-
-            if((long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4) > maxCpuTime && ap.getAvgIoInterval() > maxCpuTime) {
-                System.out.println("SWITCH_PROCESS");
-                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
-            } else if((long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4) > ap.getCpuTimeNeeded()) {
-                System.out.println("END_PROCESS");
-                eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
-
+            if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
+                System.out.println("first");
+                eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
+            }
+            else if(ap.getCpuTimeNeeded() > maxCpuTime){
+                System.out.println("second");
+                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
             }else{
-                System.out.println("IO");
-                eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
+                System.out.println("third");
+                eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
             }
         }else{
             Process nextProcess = (Process)cpuQueue.removeNext();
