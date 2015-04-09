@@ -2,10 +2,13 @@
  * Created by DagInge on 4/7/2015.
  */
 public class IO {
+    private final Queue ioQueue;
     private Process activeProcess;
+    private int longestQueue;
 
-    public IO(){
+    public IO(Queue ioQueue){
         activeProcess = null;
+        this.ioQueue = ioQueue;
     }
 
     public Process getActiveProcess() {
@@ -25,5 +28,12 @@ public class IO {
         }else{
             return true;
         }
+    }
+
+    public void insert(Process p){
+        if (this.ioQueue.getQueueLength() > this.longestQueue){
+            this.longestQueue = this.ioQueue.getQueueLength();
+        }
+        this.ioQueue.insert(p);
     }
 }
