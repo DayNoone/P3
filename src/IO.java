@@ -6,6 +6,10 @@ public class IO {
     private Process activeProcess;
     private int longestQueue;
 
+    public int getLongestQueue() {
+        return longestQueue;
+    }
+
     public IO(Queue ioQueue){
         activeProcess = null;
         this.ioQueue = ioQueue;

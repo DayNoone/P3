@@ -91,6 +91,8 @@ public class Simulator implements Constants
 		System.out.println("..done.");
 		// End the simulation by printing out the required statistics
 		statistics.cpuTimeProcessed = cpu.getTimeProcessed();
+        statistics.longestCpuQueue = cpu.getLongestQueue();
+        statistics.longestIoQueue = io.getLongestQueue();
 		statistics.printReport(simulationLength);
 	}
 
@@ -152,7 +154,6 @@ public class Simulator implements Constants
 			System.out.println("WHILE loop");
 
             // TODO: Add this process to the CPU queue!
-
 			cpuQueue.insert(p);
 
             if(!cpu.hasActiveProcess()){
@@ -194,6 +195,7 @@ public class Simulator implements Constants
         if(p != null){
             statistics.processChangeRoundRobin++;
             cpuQueue.insert(p);
+
             p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
             cpu.setActiveProcess(null, clock);
             gui.setCpuActive(null);
