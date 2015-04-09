@@ -26,13 +26,13 @@ public class Statistics
 
     public long longestIoQueue = 0;
 
-    public long nofTimesInCpuQueue;
+    public long nofTimesInCpuQueue = 0;
 
-    public long nofTimesInIoQueue;
+    public long nofTimesInIoQueue = 0;
 
-    public long totalProcessTime;
+    public long totalProcessTime = 0;
 
-
+    public long totalReadyWaitingTime = 0;
     /*
     Number of completed processes: 39
     Number of created processes: 48
@@ -97,7 +97,8 @@ public class Statistics
                     + (float) totalProcessTime / nofCompletedProcesses + " ms");
 			System.out.println("Average time spent waiting for memory per process:             "
                     + totalTimeSpentWaitingForMemory/nofCompletedProcesses+" ms");
-            System.out.println("Average time spent waiting for memory per process:             ");
+            System.out.println("Average time spent waiting for memory per process:             "
+                    + totalReadyWaitingTime / nofCompletedProcesses + " ms");
             System.out.println("Average time spent waiting for cpu per process:                ");
             System.out.println("Average time spent processing per process:                     ");
             System.out.println("Average time spent waiting for I/O per process:                ");
