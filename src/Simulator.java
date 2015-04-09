@@ -178,14 +178,14 @@ public class Simulator implements Constants
             Process ap = cpu.getActiveProcess();
             if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
                 System.out.println("first");
-                eventQueue.insertEvent(new Event(IO_REQUEST, clock + 1));
+                eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
             }
             else if(ap.getCpuTimeNeeded() > maxCpuTime){
                 System.out.println("second");
-                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + 1));
+                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
             }else{
                 System.out.println("third");
-                eventQueue.insertEvent(new Event(END_PROCESS, clock + 1));
+                eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
             }
         }else{
             Process nextProcess = (Process)cpuQueue.removeNext();
@@ -238,7 +238,7 @@ public class Simulator implements Constants
             io.setActiveProcess(ap);
             gui.setIoActive(ap);
 
-            eventQueue.insertEvent(new Event(END_IO, clock + 1 + avgIoTime));
+            eventQueue.insertEvent(new Event(END_IO, clock + (long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
         }
 		// Incomplete
 	}
