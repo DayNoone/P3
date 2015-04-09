@@ -184,6 +184,7 @@ public class Simulator implements Constants
 
         if(p != null){
             cpuQueue.insert(p);
+            p.setCpuTimeNeeded(p.getCpuTimeNeeded()-maxCpuTime);
             cpu.setActiveProcess(null);
             gui.setCpuActive(null);
         }
@@ -248,7 +249,7 @@ public class Simulator implements Constants
         }else{
             io.setActiveProcess(ap);
             gui.setIoActive(ap);
-
+            ap.setCpuTimeNeeded(ap.getCpuTimeNeeded()-avgIoTime);
             eventQueue.insertEvent(new Event(END_IO, clock + (long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
         }
 
