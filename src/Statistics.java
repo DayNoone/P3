@@ -20,6 +20,8 @@ public class Statistics
 
     public long nofCompletedIoProcesses = 0;
 
+	public long cpuTimeProcessed = 0;
+
 
     /*
     Number of completed processes: 39
@@ -62,7 +64,7 @@ public class Statistics
         System.out.println("Number of processed I/O operations:                           "+nofCompletedIoProcesses);
         System.out.println("Average throughput (processes per second)                     "+nofCompletedProcesses/simulationLength*1000);
         System.out.println();
-        System.out.println("Total cpu time spent processing                               ");
+        System.out.println("Total cpu time spent processing                               "+cpuTimeProcessed+" ms");
         System.out.println();
         System.out.println("Largest occuring memory queue length:                         "+memoryQueueLargestLength);
 		System.out.println("Average memory queue length:                                  "+(float)memoryQueueLengthTime/simulationLength);

@@ -90,6 +90,7 @@ public class Simulator implements Constants
 		}
 		System.out.println("..done.");
 		// End the simulation by printing out the required statistics
+		statistics.cpuTimeProcessed = cpu.getTimeProcessed();
 		statistics.printReport(simulationLength);
 	}
 
@@ -194,13 +195,13 @@ public class Simulator implements Constants
             statistics.processChangeRoundRobin++;
             cpuQueue.insert(p);
             p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
-            cpu.setActiveProcess(null);
+            cpu.setActiveProcess(null, clock);
             gui.setCpuActive(null);
         }
 
         if(!cpuQueue.isEmpty()){
             Process ap = (Process) cpuQueue.removeNext();
-            cpu.setActiveProcess(ap);
+            cpu.setActiveProcess(ap, clock);
             gui.setCpuActive(ap);
             if(ap != null){
 
@@ -217,7 +218,7 @@ public class Simulator implements Constants
                 }
             }
         }else{
-            cpu.setActiveProcess(null);
+            cpu.setActiveProcess(null, clock);
             gui.setCpuActive(null);
         }
 
@@ -230,7 +231,7 @@ public class Simulator implements Constants
 	private void endProcess() {
 		System.out.println("endProcess");
 		Process p = cpu.getActiveProcess();
-        cpu.setActiveProcess(null);
+        cpu.setActiveProcess(null, clock);
         gui.setCpuActive(null);
         memory.processCompleted(p);
 	}
@@ -241,7 +242,7 @@ public class Simulator implements Constants
 	 */
 	private void processIoRequest() {
         Process ap = cpu.getActiveProcess();
-        cpu.setActiveProcess(null);
+        cpu.setActiveProcess(null, clock);
         gui.setCpuActive(null);
 
         if(io.hasActiveProcess()){
