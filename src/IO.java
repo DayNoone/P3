@@ -34,10 +34,11 @@ public class IO {
         }
     }
 
-    public void insert(Process p){
+    public void insertQueue(Process p){
         if (this.ioQueue.getQueueLength() > this.longestQueue){
             this.longestQueue = this.ioQueue.getQueueLength();
         }
         this.ioQueue.insert(p);
+        p.increaseNofTimesInIoQueue();
     }
 }

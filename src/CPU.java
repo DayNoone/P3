@@ -49,8 +49,9 @@ public class CPU {
         }
     }
 
-    public void insert(Process p){
+    public void insertQueue(Process p){
         this.cpuQueue.insert(p);
+        p.increaseNofTimesInReadyQueue();
         if (cpuQueue.getQueueLength() > this.longestQueue){
             this.longestQueue = cpuQueue.getQueueLength();
         }

@@ -57,6 +57,20 @@ public class Process implements Constants
 	/** The number of times that this process has been placed in the I/O queue */
 	private long nofTimesInIoQueue = 0;
 
+	public long getNofTimesInReadyQueue(){
+		return nofTimesInReadyQueue;
+	}
+
+	public long getNofTimesInIoQueue(){
+		return nofTimesInIoQueue;
+	}
+
+	public void increaseNofTimesInReadyQueue(){
+		nofTimesInReadyQueue++;
+	}
+	public void increaseNofTimesInIoQueue(){
+		nofTimesInIoQueue++;
+	}
 	/** The global time of the last event involving this process */
 	private long timeOfLastEvent;
 

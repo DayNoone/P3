@@ -154,7 +154,7 @@ public class Simulator implements Constants
 			System.out.println("WHILE loop");
 
             // TODO: Add this process to the CPU queue!
-			cpu.insert(p);
+			cpu.insertQueue(p);
 
             if(!cpu.hasActiveProcess()){
 				System.out.println("SKJER DETTE?");
@@ -194,7 +194,7 @@ public class Simulator implements Constants
 
         if(p != null){
             statistics.processChangeRoundRobin++;
-            cpu.insert(p);
+            cpu.insertQueue(p);
 
             p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
             cpu.setActiveProcess(null, clock);
@@ -233,6 +233,8 @@ public class Simulator implements Constants
 	private void endProcess() {
 		System.out.println("endProcess");
 		Process p = cpu.getActiveProcess();
+		statistics.nofTimesInCpuQueue += p.getNofTimesInReadyQueue();
+		statistics.nofTimesInIoQueue += p.getNofTimesInIoQueue();
         cpu.setActiveProcess(null, clock);
         gui.setCpuActive(null);
         memory.processCompleted(p);
@@ -248,7 +250,7 @@ public class Simulator implements Constants
         gui.setCpuActive(null);
 
         if(io.hasActiveProcess()){
-            io.insert(ap);
+            io.insertQueue(ap);
         }else{
             io.setActiveProcess(ap);
             gui.setIoActive(ap);
@@ -268,7 +270,7 @@ public class Simulator implements Constants
 	 */
 	private void endIoOperation() {
         statistics.nofCompletedIoProcesses++;
-        cpu.insert(io.getActiveProcess());
+        cpu.insertQueue(io.getActiveProcess());
         io.setActiveProcess(null);
         gui.setIoActive(null);
 
