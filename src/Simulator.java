@@ -101,18 +101,23 @@ public class Simulator implements Constants
 	private void processEvent(Event event) {
 		switch (event.getType()) {
 			case NEW_PROCESS:
+				System.out.println("NEW_PROCESS");
 				createProcess();
 				break;
 			case SWITCH_PROCESS:
+				System.out.println("SWITCH_PROCESS");
 				switchProcess();
 				break;
 			case END_PROCESS:
+				System.out.println("END_PROCESS");
 				endProcess();
 				break;
 			case IO_REQUEST:
+				System.out.println("IO_REQUEST");
 				processIoRequest();
 				break;
 			case END_IO:
+				System.out.println("END_IO");
 				endIoOperation();
 				break;
 		}
@@ -139,22 +144,22 @@ public class Simulator implements Constants
 	 * memory for the processes.
 	 */
 	private void flushMemoryQueue() {
-//		System.out.println("flushMemoryQueue");
+		System.out.println("flushMemoryQueue");
 		Process p = memory.checkMemory(clock);
 		// As long as there is enough memory, processes are moved from the memory queue to the cpu queue
 		while(p != null) {
+			System.out.println("WHILE loop");
 
             // TODO: Add this process to the CPU queue!
 
 			cpuQueue.insert(p);
 
             if(!cpu.hasActiveProcess()){
-                switchProcess();
+				System.out.println("SKJER DETTE?");
+				switchProcess();
             }
 
 //            System.out.println(eventQueue.getSize());
-
-
 
 			// Also add new events to the event queue if needed
 
@@ -170,6 +175,10 @@ public class Simulator implements Constants
 
 			// Check for more free memory
 			p = memory.checkMemory(clock);
+		}
+
+		if (!cpuQueue.isEmpty() && !cpu.hasActiveProcess()){
+			switchProcess();
 		}
 
 	}
@@ -220,9 +229,9 @@ public class Simulator implements Constants
 	private void endProcess() {
 		System.out.println("endProcess");
 		Process p = cpu.getActiveProcess();
-        memory.processCompleted(p);
         cpu.setActiveProcess(null);
         gui.setCpuActive(null);
+        memory.processCompleted(p);
 	}
 
 	/**
@@ -242,7 +251,7 @@ public class Simulator implements Constants
             ap.setCpuTimeNeeded(ap.getCpuTimeNeeded() - avgIoTime - ap.getAvgIoInterval());
 			if (ap.getCpuTimeNeeded() < 0)
 				ap.setCpuTimeNeeded(0);
-            eventQueue.insertEvent(new Event(END_IO, clock + (long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
+            eventQueue.insertEvent(new Event(END_IO, clock + avgIoTime));
         }
 
         switchProcess();
@@ -264,7 +273,7 @@ public class Simulator implements Constants
             Process nio = (Process) ioQueue.removeNext();
             io.setActiveProcess(nio);
             gui.setIoActive(nio);
-            eventQueue.insertEvent(new Event(END_IO,clock+(long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
+            eventQueue.insertEvent(new Event(END_IO,clock+ avgIoTime));
 
         }
 
