@@ -149,7 +149,9 @@ public class Simulator implements Constants
 
 			cpuQueue.insert(p);
 
-            createEvent();
+            if(!cpu.hasActiveProcess()){
+                switchProcess();
+            }
 
             System.out.println(eventQueue.getSize());
 
@@ -173,43 +175,51 @@ public class Simulator implements Constants
 
 	}
 
-    private void createEvent() {
-        if (cpu.hasActiveProcess()){
-            Process ap = cpu.getActiveProcess();
-            if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
-                System.out.println("first");
-                eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
-            }
-            else if(ap.getCpuTimeNeeded() > maxCpuTime){
-                System.out.println("second");
-                eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
-            }else{
-                System.out.println("third");
-                eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
-            }
-        }else{
-            Process nextProcess = (Process)cpuQueue.removeNext();
-            cpu.setActiveProcess(nextProcess);
-            gui.setCpuActive(nextProcess);
-        }
-    }
-
     /**
 	 * Simulates a process switch.
 	 */
 	private void switchProcess() {
-		System.out.println("switchProcess");
 
-		Process nextProcess = (Process)cpuQueue.removeNext();
-		Process oldProcess = cpu.getActiveProcess();
+		Process p = cpu.getActiveProcess();
 
-		if (cpu.getActiveProcess() != null) {
-			oldProcess.setCpuTimeNeeded(oldProcess.getCpuTimeNeeded()-maxCpuTime);
-			cpuQueue.insert(oldProcess);
-		}
-		cpu.setActiveProcess(nextProcess);
-		gui.setCpuActive(nextProcess);
+        if(p != null){
+            cpuQueue.insert(p);
+            cpu.setActiveProcess(null);
+            gui.setCpuActive(null);
+        }
 
+        if(!cpuQueue.isEmpty()){
+            Process ap = (Process) cpuQueue.removeNext();
+            cpu.setActiveProcess(ap);
+            gui.setCpuActive(ap);
+            if(ap != null){
+                /*if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
+                    System.out.println("first");
+                    eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
+                }
+                else if(ap.getCpuTimeNeeded() > maxCpuTime){
+                    System.out.println("second");
+                    eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
+                }else{
+                    System.out.println("third");
+                    eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
+                }*/
+                long timeToIo = (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4);
+                if (timeToIo > maxCpuTime && ap.getCpuTimeNeeded() > maxCpuTime) {
+                    System.out.println("SWITCH_PROCESS");
+                    eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
+                }else if (timeToIo > ap.getCpuTimeNeeded()){
+                    System.out.println("END_PROCESS");
+                    eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
+                }else{
+                    System.out.println("IO_REQUEST");
+                    eventQueue.insertEvent(new Event(IO_REQUEST, clock + timeToIo));
+                }
+            }
+        }else{
+            cpu.setActiveProcess(null);
+            gui.setCpuActive(null);
+        }
 
 		// Incomplete??
 	}
@@ -218,7 +228,8 @@ public class Simulator implements Constants
 	 * Ends the active process, and deallocates any resources allocated to it.
 	 */
 	private void endProcess() {
-        memory.processCompleted(cpu.getActiveProcess());
+        Process p = cpu.getActiveProcess();
+        memory.processCompleted(p);
         cpu.setActiveProcess(null);
         gui.setCpuActive(null);
 	}
@@ -240,6 +251,8 @@ public class Simulator implements Constants
 
             eventQueue.insertEvent(new Event(END_IO, clock + (long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
         }
+
+        switchProcess();
 		// Incomplete
 	}
 
@@ -252,8 +265,15 @@ public class Simulator implements Constants
         io.setActiveProcess(null);
         gui.setIoActive(null);
 
-        createEvent();
+        if(!cpu.hasActiveProcess()) switchProcess();
 
+        if(!ioQueue.isEmpty()){
+            Process nio = (Process) ioQueue.removeNext();
+            io.setActiveProcess(nio);
+            gui.setIoActive(nio);
+            eventQueue.insertEvent(new Event(END_IO,clock+(long) (Math.random() * (avgIoTime * 2) + avgIoTime / 2)));
+
+        }
 
 		// Incomplete
 	}

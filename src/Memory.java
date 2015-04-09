@@ -79,7 +79,8 @@ public class Memory {
 	 * @param p	The process that is leaving the system.
 	 */
     public void processCompleted(Process p) {
-		freeMemory += p.getMemoryNeeded();
+        System.out.println("PROCESSCOMPLETED");
+        freeMemory += p.getMemoryNeeded();
     }
 }
 
