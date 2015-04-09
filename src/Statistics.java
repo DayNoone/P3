@@ -30,6 +30,8 @@ public class Statistics
 
     public long nofTimesInIoQueue;
 
+    public long totalProcessTime;
+
 
     /*
     Number of completed processes: 39
@@ -88,17 +90,18 @@ public class Statistics
 			System.out.println("Average # of times a process has been placed in memory queue:  "
                     + 1);
             System.out.println("Average # of times a process has been placed in cpu queue:     "
-                    + nofTimesInCpuQueue / nofCompletedProcesses);
+                    + (float) nofTimesInCpuQueue / nofCompletedProcesses);
             System.out.println("Average # of times a process has been placed in I/O queue:     "
-                    + nofTimesInIoQueue / nofCompletedProcesses);
-            System.out.println("Average time spent in system per process");
+                    + (float) nofTimesInIoQueue / nofCompletedProcesses);
+            System.out.println("Average time spent in system per process                       "
+                    + (float) totalProcessTime / nofCompletedProcesses + " ms");
 			System.out.println("Average time spent waiting for memory per process:             "
                     + totalTimeSpentWaitingForMemory/nofCompletedProcesses+" ms");
-            System.out.println("Average time spent waiting for memory per process:");
-            System.out.println("Average time spent waiting for cpu per process:");
-            System.out.println("Average time spent processing per process:");
-            System.out.println("Average time spent waiting for I/O per process:");
-            System.out.println("Average time spent in I/O per process:");
+            System.out.println("Average time spent waiting for memory per process:             ");
+            System.out.println("Average time spent waiting for cpu per process:                ");
+            System.out.println("Average time spent processing per process:                     ");
+            System.out.println("Average time spent waiting for I/O per process:                ");
+            System.out.println("Average time spent in I/O per process:                         ");
 		}
 	}
 }
