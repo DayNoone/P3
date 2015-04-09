@@ -22,27 +22,30 @@ public class Statistics
 
 
     /*
-     Antall ferdige prosesser
-     Antall opprettede prosesser
-     Antall prosessskifter (som skyldes oppbrukt tidskvant)
-     Antall utførte I/O-operasjoner
-     Gjennomsnittlig gjennomstrømning (ferdige prosesser per sekund)
-     Total tid CPU har brukt på å prosessere
-     Total tid CPU har vært ledig
-     Prosentvis hvor mye tid CPU har brukt på å prosessere (utilisasjon)
-     Prosentvis hvor lenge CPU har vært ledig
-     Størst forekommende samt
-     gjennomsnittlig lengde på alle køer
-     Hvor mange ganger en ferdige prosess gjennomsnittlig har blitt plassert i hver enkelt kø
-        memory
-         io
-         cpu
-     Gjennomsnittlig tid tilbrakt i systemet per ferdige prosess
-     Gjennomsnittlig tid ventende på tilstrekkelig lagerplass per ferdige prosess
-     Gjennomsnittlig tid ventende på CPU-kraft per ferdige prosess
-     Gjennomsnittlig tid brukt i CPU per ferdige prosess
-     Gjennomsnittlig tid ventende på I/O-kapasitet per ferdige prosess
-     Gjennomsnittlig tid brukt i I/O per ferdige prosess
+    Number of completed processes: 39
+    Number of created processes: 48
+    Number of (forced) process switches: 207
+    Number of processed I/O operations: 753
+    Average throughput (processes per second): 0.156
+    Total CPU time spent processing: 199213 ms
+    Fraction of CPU time spent processing: 79.6852%
+    Total CPU time spent waiting: 50787 ms
+    Fraction of CPU time spent waiting: 20.3148%
+    Largest occuring memory queue length: 2
+    Average memory queue length: 0.13544
+    Largest occuring cpu queue length: 6
+    Average cpu queue length: 1.753956
+    Largest occuring I/O queue length: 6
+    Average I/O queue length: 1.121616
+    Average # of times a process has been placed in memory queue: 1
+    Average # of times a process has been placed in cpu queue: 20.333334
+    Average # of times a process has been placed in I/O queue: 14.256411
+    Average time spent in system per process: 22772 ms
+    Average time spent waiting for memory per process: 657 ms
+    Average time spent waiting for cpu per process: 10104 ms
+    Average time spent processing per process: 4465 ms
+    Average time spent waiting for I/O per process: 4329 ms
+    Average time spent in I/O per process: 3215 ms
     */
 
 	/**
