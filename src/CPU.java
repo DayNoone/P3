@@ -3,7 +3,14 @@
  */
 public class CPU {
 
+    private final Queue cpuQueue;
     private Process activeProcess;
+
+    public int getLongestQueue() {
+        return longestQueue;
+    }
+
+    private int longestQueue;
 
     public long getTimeProcessed() {
         return timeProcessed;
@@ -12,9 +19,11 @@ public class CPU {
     private long timeProcessed;
     private long start, end;
 
-    public CPU(){
+    public CPU(Queue cpuQueue){
         activeProcess = null;
         timeProcessed = 0;
+        this.cpuQueue = cpuQueue;
+        this.longestQueue = 0;
     }
 
     public Process getActiveProcess() {
@@ -37,6 +46,13 @@ public class CPU {
             return false;
         }else{
             return true;
+        }
+    }
+
+    public void insert(Process p){
+        this.cpuQueue.insert(p);
+        if (cpuQueue.getQueueLength() > this.longestQueue){
+            this.longestQueue = cpuQueue.getQueueLength();
         }
     }
 }

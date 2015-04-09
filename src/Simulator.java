@@ -53,7 +53,7 @@ public class Simulator implements Constants
         this.ioQueue = ioQueue;
 		this.maxCpuTime = maxCpuTime;
         this.avgIoTime = avgIoTime;
-		cpu = new CPU();
+		cpu = new CPU(this.cpuQueue);
         io = new IO();
     }
 
