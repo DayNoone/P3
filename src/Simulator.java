@@ -191,6 +191,7 @@ public class Simulator implements Constants
 		Process p = cpu.getActiveProcess();
 
         if(p != null){
+            statistics.processChangeRoundRobin++;
             cpuQueue.insert(p);
             p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
             cpu.setActiveProcess(null);
@@ -263,6 +264,7 @@ public class Simulator implements Constants
 	 * is done with its I/O operation.
 	 */
 	private void endIoOperation() {
+        statistics.nofCompletedIoProcesses++;
         cpuQueue.insert(io.getActiveProcess());
         io.setActiveProcess(null);
         gui.setIoActive(null);

@@ -16,11 +16,16 @@ public class Statistics
 	/** The largest memory queue length that has occured */
 	public long memoryQueueLargestLength = 0;
 
+    public long processChangeRoundRobin = 0;
+
+    public long nofCompletedIoProcesses = 0;
+
+
     /*
-     Antall ferdige prosesser
-     Antall opprettede prosesser
-     Antall prosessskifter (som skyldes oppbrukt tidskvant)
-     Antall utførte I/O-operasjoner
+     Antall ferdige prosesser
+     Antall opprettede prosesser
+     Antall prosessskifter (som skyldes oppbrukt tidskvant)
+     Antall utførte I/O-operasjoner
      Gjennomsnittlig gjennomstrømning (ferdige prosesser per sekund)
      Total tid CPU har brukt på å prosessere
      Total tid CPU har vært ledig
@@ -33,7 +38,7 @@ public class Statistics
          io
          cpu
      Gjennomsnittlig tid tilbrakt i systemet per ferdige prosess
-     Gjennomsnittlig tid ventende på tilstrekkelig lagerplass per ferdige prosess
+     Gjennomsnittlig tid ventende på tilstrekkelig lagerplass per ferdige prosess
      Gjennomsnittlig tid ventende på CPU-kraft per ferdige prosess
      Gjennomsnittlig tid brukt i CPU per ferdige prosess
      Gjennomsnittlig tid ventende på I/O-kapasitet per ferdige prosess
@@ -50,8 +55,13 @@ public class Statistics
 		System.out.println();
 		System.out.println("Number of completed processes:                                "+nofCompletedProcesses);
 		System.out.println("Number of created processes:                                  "+nofCreatedProcesses);
-		System.out.println();
-		System.out.println("Largest occuring memory queue length:                         "+memoryQueueLargestLength);
+        System.out.println("Number of (forced) process switches:                          "+processChangeRoundRobin);
+        System.out.println("Number of processed I/O operations:                           "+nofCompletedIoProcesses);
+        System.out.println("Average throughput (processes per second)                     "+nofCompletedProcesses/simulationLength*1000);
+        System.out.println();
+        System.out.println("Total cpu time spent processing                               ");
+        System.out.println();
+        System.out.println("Largest occuring memory queue length:                         "+memoryQueueLargestLength);
 		System.out.println("Average memory queue length:                                  "+(float)memoryQueueLengthTime/simulationLength);
 		if(nofCompletedProcesses > 0) {
 			System.out.println("Average # of times a process has been placed in memory queue: "+1);
