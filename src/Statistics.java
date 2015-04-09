@@ -29,6 +29,9 @@ public class Statistics
      Størst forekommende samt
      gjennomsnittlig lengde på alle køer
      Hvor mange ganger en ferdige prosess gjennomsnittlig har blitt plassert i hver enkelt kø
+        memory
+         io
+         cpu
      Gjennomsnittlig tid tilbrakt i systemet per ferdige prosess
      Gjennomsnittlig tid ventende på tilstrekkelig lagerplass per ferdige prosess
      Gjennomsnittlig tid ventende på CPU-kraft per ferdige prosess
