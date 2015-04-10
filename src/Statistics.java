@@ -32,9 +32,13 @@ public class Statistics
 
     public long totalTimeSpentInSystem = 0;
 
-    public long totalReadyWaitingTime = 0;
-
     public long totalCpuWaitingTime = 0;
+
+    public long totalProcessingTime = 0;
+
+    public long totalIoWaitingTime = 0;
+
+    public long totalIoProcessingTime = 0;
     /*
     Number of completed processes: 39
     Number of created processes: 48
@@ -101,9 +105,12 @@ public class Statistics
                     + totalTimeSpentWaitingForMemory/nofCompletedProcesses+" ms");
             System.out.println("Average time spent waiting for cpu per process:                "
                     + totalCpuWaitingTime / nofCompletedProcesses + " ms");
-            System.out.println("Average time spent processing per process:                     ");
-            System.out.println("Average time spent waiting for I/O per process:                ");
-            System.out.println("Average time spent in I/O per process:                         ");
+            System.out.println("Average time spent processing per process:                     "
+                    + totalProcessingTime / nofCompletedProcesses + " ms");
+            System.out.println("Average time spent waiting for I/O per process:                "
+                    + totalIoWaitingTime / nofCompletedProcesses + " ms");
+            System.out.println("Average time spent in I/O per process:                         "
+                    + totalIoProcessingTime / nofCompletedProcesses + " ms");
 		}
 	}
 }
