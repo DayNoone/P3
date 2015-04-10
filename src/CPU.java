@@ -6,7 +6,12 @@ public class CPU {
     private final Queue cpuQueue;
     private Process activeProcess;
     private int longestQueue;
-    private int avgQueueLength;
+
+    public int getTotalQueueLength() {
+        return totalQueueLength;
+    }
+
+    private int totalQueueLength = 0;
 
     public int getLongestQueue() {
         return longestQueue;
@@ -64,8 +69,7 @@ public class CPU {
         }
     }
 
-    public void calculateAvgQueueLength() {
-
-
+    public void saveQueueLength() {
+        totalQueueLength += cpuQueue.getQueueLength();
     }
 }

@@ -7,6 +7,12 @@ public class IO {
     private int longestQueue;
     private Process lastActiveProcess;
 
+    public int getTotalQueueLength() {
+        return totalQueueLength;
+    }
+
+    private int totalQueueLength = 0;
+
     public int getLongestQueue() {
         return longestQueue;
     }
@@ -49,5 +55,9 @@ public class IO {
             this.longestQueue = this.ioQueue.getQueueLength();
         }
 
+    }
+
+    public void saveQueueLength() {
+        totalQueueLength += ioQueue.getQueueLength();
     }
 }

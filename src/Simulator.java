@@ -25,6 +25,7 @@ public class Simulator implements Constants
     private long avgIoTime;
 	private CPU cpu;
     private IO io;
+	private int numberOfRuns = 0;
 
 	/**
 	 * Constructs a scheduling simulator with the given parameters.
@@ -79,7 +80,9 @@ public class Simulator implements Constants
 			// Let the memory unit and the GUI know that time has passed
 			memory.timePassed(timeDifference);
 			gui.timePassed(timeDifference);
-			cpu.calculateAvgQueueLength();
+			cpu.saveQueueLength();
+			io.saveQueueLength();
+			this.numberOfRuns++;
 
 			// Deal with the event
 			if (clock < simulationLength) {
@@ -95,6 +98,8 @@ public class Simulator implements Constants
 		statistics.cpuTimeProcessed = cpu.getTimeProcessed();
         statistics.longestCpuQueue = cpu.getLongestQueue();
         statistics.longestIoQueue = io.getLongestQueue();
+		statistics.avgCpuQueue = (float)cpu.getTotalQueueLength()/numberOfRuns;
+		statistics.avgIoQueue = (float)io.getTotalQueueLength()/numberOfRuns;
 		statistics.printReport(simulationLength);
 	}
 

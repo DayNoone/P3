@@ -26,11 +26,11 @@ public class Statistics
 
     public long longestIoQueue = 0;
 
-    public long avgCpuQueue = 0;
+    public float avgCpuQueue = 0;
 
     public long nofTimesInCpuQueue = 0;
 
-    public long avgIoQueue = 0;
+    public float avgIoQueue = 0;
 
     public long nofTimesInIoQueue = 0;
 
