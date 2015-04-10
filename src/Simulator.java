@@ -155,7 +155,7 @@ public class Simulator implements Constants
 
             // TODO: Add this process to the CPU queue!
 
-			cpu.insertQueue(p);
+			cpu.insertQueue(p, clock);
 
 			p.setFirstTimeInReadyQueue(clock);
 
@@ -197,7 +197,7 @@ public class Simulator implements Constants
 
         if(p != null){
             statistics.processChangeRoundRobin++;
-            cpu.insertQueue(p);
+            cpu.insertQueue(p, clock);
 
             p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
             cpu.setActiveProcess(null, clock);
@@ -240,6 +240,7 @@ public class Simulator implements Constants
 		statistics.nofTimesInCpuQueue += p.getNofTimesInReadyQueue();
 		statistics.nofTimesInIoQueue += p.getNofTimesInIoQueue();
 		statistics.totalTimeSpentInSystem += clock - p.getCreationTime();
+		statistics.totalCpuWaitingTime += p.getTimeSpentInReadyQueue();
 
 
 		cpu.setActiveProcess(null, clock);
@@ -277,7 +278,7 @@ public class Simulator implements Constants
 	 */
 	private void endIoOperation() {
         statistics.nofCompletedIoProcesses++;
-        cpu.insertQueue(io.getActiveProcess());
+        cpu.insertQueue(io.getActiveProcess(), clock);
         io.setActiveProcess(null);
         gui.setIoActive(null);
 

@@ -39,6 +39,8 @@ public class CPU {
             this.timeProcessed += runtime;
         }
         this.activeProcess = activeProcess;
+
+        activeProcess.setTimeSpentInReadyQueue(activeProcess.getTimePutInReadyQueue() + clock - activeProcess.getTimePutInReadyQueue());
     }
 
     public boolean hasActiveProcess(){
@@ -49,8 +51,9 @@ public class CPU {
         }
     }
 
-    public void insertQueue(Process p){
+    public void insertQueue(Process p, long clock){
         this.cpuQueue.insert(p);
+        p.setTimePutInReadyQueue(clock);
         p.increaseNofTimesInReadyQueue();
         if (cpuQueue.getQueueLength() > this.longestQueue){
             this.longestQueue = cpuQueue.getQueueLength();

@@ -53,6 +53,15 @@ public class Process implements Constants
 
 	/** The time that this process has spent waiting in the memory queue */
 	private long timeSpentWaitingForMemory = 0;
+
+	public long getTimeSpentInReadyQueue() {
+		return timeSpentInReadyQueue;
+	}
+
+	public void setTimeSpentInReadyQueue(long timeSpentInReadyQueue) {
+		this.timeSpentInReadyQueue = timeSpentInReadyQueue;
+	}
+
 	/** The time that this process has spent waiting in the CPU queue */
 	private long timeSpentInReadyQueue = 0;
 	/** The time that this process has spent processing */
@@ -83,6 +92,16 @@ public class Process implements Constants
 	}
 	/** The global time of the last event involving this process */
 	private long timeOfLastEvent;
+
+	public long getTimePutInReadyQueue() {
+		return timePutInReadyQueue;
+	}
+
+	public void setTimePutInReadyQueue(long timePutInReadyQueue) {
+		this.timePutInReadyQueue = timePutInReadyQueue;
+	}
+
+	private long timePutInReadyQueue = 0;
 
 	/**
 	 * Creates a new process with given parameters. Other parameters are randomly
