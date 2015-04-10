@@ -5,6 +5,7 @@ public class IO {
     private final Queue ioQueue;
     private Process activeProcess;
     private int longestQueue;
+    private Process lastActiveProcess;
 
     public int getLongestQueue() {
         return longestQueue;
@@ -19,10 +20,15 @@ public class IO {
         return activeProcess;
     }
 
-    public void setActiveProcess(Process activeProcess) {
+    public void setActiveProcess(Process activeProcess, long clock) {
         this.activeProcess = activeProcess;
         if(activeProcess != null){
+            activeProcess.setTimeSpentWaitingForIo(activeProcess.getTimeSpentWaitingForIo() + clock - activeProcess.getTimePutInIoQueue());
+            lastActiveProcess = activeProcess;
+            activeProcess.setTimePutInCPU(clock);
 
+        }else{
+            lastActiveProcess.setTimeSpentInIo(lastActiveProcess.getTimeSpentInIo() + clock-lastActiveProcess.getTimePutInIo());
         }
     }
 
@@ -34,11 +40,14 @@ public class IO {
         }
     }
 
-    public void insertQueue(Process p){
+    public void insertQueue(Process p, long clock){
+        this.ioQueue.insert(p);
+        p.setTimePutInIoQueue(clock);
+        p.increaseNofTimesInIoQueue();
+
         if (this.ioQueue.getQueueLength() > this.longestQueue){
             this.longestQueue = this.ioQueue.getQueueLength();
         }
-        this.ioQueue.insert(p);
-        p.increaseNofTimesInIoQueue();
+
     }
 }
