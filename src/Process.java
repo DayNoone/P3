@@ -41,22 +41,6 @@ public class Process implements Constants {
     private long timePutInIoQueue;
     private long timePutInIo;
 
-    public long getCreationTime() {
-        return creationTime;
-    }
-
-    public void setFirstTimeInReadyQueue(long t) {
-        this.firstTimeInReadyQueue = t;
-    }
-
-    public long getCpuTimeNeeded() {
-        return cpuTimeNeeded;
-    }
-
-    public void setCpuTimeNeeded(long cpuTimeNeeded) {
-        this.cpuTimeNeeded = cpuTimeNeeded;
-    }
-
     /**
      * The average time between the need for I/O operations for this process
      */
@@ -71,30 +55,10 @@ public class Process implements Constants {
      */
     private long timeSpentWaitingForMemory = 0;
 
-    public long getAvgIoInterval() {
-        return avgIoInterval;
-    }
-
-    public long getTimeSpentInReadyQueue() {
-        return timeSpentInReadyQueue;
-    }
-
-    public void setTimeSpentInReadyQueue(long timeSpentInReadyQueue) {
-        this.timeSpentInReadyQueue = timeSpentInReadyQueue;
-    }
-
     /**
      * The time that this process has spent waiting in the CPU queue
      */
     private long timeSpentInReadyQueue = 0;
-
-    public long getTimeSpentInCpu() {
-        return timeSpentInCpu;
-    }
-
-    public void setTimeSpentInCpu(long timeSpentInCpu) {
-        this.timeSpentInCpu = timeSpentInCpu;
-    }
 
     /**
      * The time that this process has spent processing
@@ -118,36 +82,11 @@ public class Process implements Constants {
      */
     private long nofTimesInIoQueue = 0;
 
-    public long getNofTimesInReadyQueue() {
-        return nofTimesInReadyQueue;
-    }
-
-    public long getNofTimesInIoQueue() {
-        return nofTimesInIoQueue;
-    }
-
-    public void increaseNofTimesInReadyQueue() {
-        nofTimesInReadyQueue++;
-    }
-
-    public void increaseNofTimesInIoQueue() {
-        nofTimesInIoQueue++;
-    }
-
     /**
      * The global time of the last event involving this process
      */
     private long timeOfLastEvent;
     private long timePutInReadyQueue = 0;
-
-    public long getTimePutInReadyQueue() {
-        return timePutInReadyQueue;
-    }
-
-    public void setTimePutInReadyQueue(long timePutInReadyQueue) {
-        this.timePutInReadyQueue = timePutInReadyQueue;
-    }
-
 
     /**
      * Creates a new process with given parameters. Other parameters are randomly
@@ -264,6 +203,67 @@ public class Process implements Constants {
 
     public void setTimeSpentInIo(long timeSpentInIo) {
         this.timeSpentInIo = timeSpentInIo;
+    }
+
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    public void setFirstTimeInReadyQueue(long t) {
+        this.firstTimeInReadyQueue = t;
+    }
+
+    public long getCpuTimeNeeded() {
+        return cpuTimeNeeded;
+    }
+
+    public void setCpuTimeNeeded(long cpuTimeNeeded) {
+        this.cpuTimeNeeded = cpuTimeNeeded;
+    }
+
+    public long getAvgIoInterval() {
+        return avgIoInterval;
+    }
+
+    public long getTimeSpentInReadyQueue() {
+        return timeSpentInReadyQueue;
+    }
+
+    public void setTimeSpentInReadyQueue(long timeSpentInReadyQueue) {
+        this.timeSpentInReadyQueue = timeSpentInReadyQueue;
+    }
+
+    public long getTimeSpentInCpu() {
+        return timeSpentInCpu;
+    }
+
+    public void setTimeSpentInCpu(long timeSpentInCpu) {
+        this.timeSpentInCpu = timeSpentInCpu;
+    }
+
+
+    public long getNofTimesInReadyQueue() {
+        return nofTimesInReadyQueue;
+    }
+
+    public long getNofTimesInIoQueue() {
+        return nofTimesInIoQueue;
+    }
+
+    public void increaseNofTimesInReadyQueue() {
+        nofTimesInReadyQueue++;
+    }
+
+    public void increaseNofTimesInIoQueue() {
+        nofTimesInIoQueue++;
+    }
+
+    public long getTimePutInReadyQueue() {
+        return timePutInReadyQueue;
+    }
+
+    public void setTimePutInReadyQueue(long timePutInReadyQueue) {
+        this.timePutInReadyQueue = timePutInReadyQueue;
     }
 
     // Add more methods as needed

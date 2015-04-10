@@ -6,16 +6,7 @@ public class IO {
     private Process activeProcess;
     private int longestQueue;
     private Process lastActiveProcess;
-
-    public int getTotalQueueLength() {
-        return totalQueueLength;
-    }
-
     private int totalQueueLength = 0;
-
-    public int getLongestQueue() {
-        return longestQueue;
-    }
 
     public IO(Queue ioQueue){
         activeProcess = null;
@@ -59,5 +50,13 @@ public class IO {
 
     public void saveQueueLength() {
         totalQueueLength += ioQueue.getQueueLength();
+    }
+
+    public int getTotalQueueLength() {
+        return totalQueueLength;
+    }
+
+    public int getLongestQueue() {
+        return longestQueue;
     }
 }

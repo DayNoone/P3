@@ -6,50 +6,16 @@ public class CPU {
     private final Queue cpuQueue;
     private Process activeProcess;
     private int longestQueue;
-
-    public int getTotalQueueLength() {
-        return totalQueueLength;
-    }
-
     private int totalQueueLength = 0;
-
-    public int getLongestQueue() {
-        return longestQueue;
-    }
-
-    public long getTimeProcessed() {
-        return timeProcessed;
-    }
     private long timeProcessed;
     private long start, end;
     private Process lastActiveProcess;
-
 
     public CPU(Queue cpuQueue){
         activeProcess = null;
         timeProcessed = 0;
         this.cpuQueue = cpuQueue;
         this.longestQueue = 0;
-    }
-
-    public Process getActiveProcess() {
-        return activeProcess;
-    }
-
-    public void setActiveProcess(Process activeProcess, long clock) {
-        if (activeProcess != null){
-            lastActiveProcess = activeProcess;
-            activeProcess.setTimePutInCPU(clock);
-            this.start = clock;
-            activeProcess.setTimeSpentInReadyQueue(activeProcess.getTimePutInReadyQueue() + clock - activeProcess.getTimePutInReadyQueue());
-        }else{
-            lastActiveProcess.setTimeSpentInCpu(lastActiveProcess.getTimeSpentInCpu() + clock-lastActiveProcess.getTimePutInCPU());
-            this.end = clock;
-            long runtime = this.end - this.start;
-            this.timeProcessed += runtime;
-        }
-        this.activeProcess = activeProcess;
-
     }
 
     public boolean hasActiveProcess(){
@@ -69,7 +35,38 @@ public class CPU {
         }
     }
 
+    public Process getActiveProcess() {
+        return activeProcess;
+    }
+
+    public void setActiveProcess(Process activeProcess, long clock) {
+        if (activeProcess != null){
+            lastActiveProcess = activeProcess;
+            activeProcess.setTimePutInCPU(clock);
+            this.start = clock;
+            activeProcess.setTimeSpentInReadyQueue(activeProcess.getTimePutInReadyQueue() + clock - activeProcess.getTimePutInReadyQueue());
+        }else{
+            lastActiveProcess.setTimeSpentInCpu(lastActiveProcess.getTimeSpentInCpu() + clock-lastActiveProcess.getTimePutInCPU());
+            this.end = clock;
+            long runtime = this.end - this.start;
+            this.timeProcessed += runtime;
+        }
+        this.activeProcess = activeProcess;
+    }
+
     public void saveQueueLength() {
         totalQueueLength += cpuQueue.getQueueLength();
+    }
+
+    public int getTotalQueueLength() {
+        return totalQueueLength;
+    }
+
+    public int getLongestQueue() {
+        return longestQueue;
+    }
+
+    public long getTimeProcessed() {
+        return timeProcessed;
     }
 }
