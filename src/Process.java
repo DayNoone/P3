@@ -21,9 +21,6 @@ public class Process implements Constants
 	}
 
 	private long firstTimeInReadyQueue;
-	public long getFirstTimeInReadyQueue(){
-		return firstTimeInReadyQueue;
-	}
 	public void setFirstTimeInReadyQueue(long t){
 		this.firstTimeInReadyQueue = t;
 	}
