@@ -16,14 +16,9 @@ public class Process implements Constants
 	private static Font font = new Font("Arial", Font.PLAIN, 10);
 
 	private final long creationTime;
-	public long getCreationTime() {
-		return creationTime;
-	}
 
 	private long firstTimeInReadyQueue;
-	public void setFirstTimeInReadyQueue(long t){
-		this.firstTimeInReadyQueue = t;
-	}
+
 	/** The ID of this process */
 	private long processId;
 	/** The color of this process */
@@ -31,20 +26,8 @@ public class Process implements Constants
 	/** The amount of memory needed by this process */
     private long memoryNeeded;
 
-	public long getCpuTimeNeeded() {
-		return cpuTimeNeeded;
-	}
-
-	public void setCpuTimeNeeded(long cpuTimeNeeded) {
-		this.cpuTimeNeeded = cpuTimeNeeded;
-	}
-
 	/** The amount of cpu time still needed by this process */
     private long cpuTimeNeeded;
-
-	public long getAvgIoInterval() {
-		return avgIoInterval;
-	}
 
 	/** The average time between the need for I/O operations for this process */
     private long avgIoInterval;
@@ -53,14 +36,6 @@ public class Process implements Constants
 
 	/** The time that this process has spent waiting in the memory queue */
 	private long timeSpentWaitingForMemory = 0;
-
-	public long getTimeSpentInReadyQueue() {
-		return timeSpentInReadyQueue;
-	}
-
-	public void setTimeSpentInReadyQueue(long timeSpentInReadyQueue) {
-		this.timeSpentInReadyQueue = timeSpentInReadyQueue;
-	}
 
 	/** The time that this process has spent waiting in the CPU queue */
 	private long timeSpentInReadyQueue = 0;
@@ -76,30 +51,8 @@ public class Process implements Constants
 	/** The number of times that this process has been placed in the I/O queue */
 	private long nofTimesInIoQueue = 0;
 
-	public long getNofTimesInReadyQueue(){
-		return nofTimesInReadyQueue;
-	}
-
-	public long getNofTimesInIoQueue(){
-		return nofTimesInIoQueue;
-	}
-
-	public void increaseNofTimesInReadyQueue(){
-		nofTimesInReadyQueue++;
-	}
-	public void increaseNofTimesInIoQueue(){
-		nofTimesInIoQueue++;
-	}
 	/** The global time of the last event involving this process */
 	private long timeOfLastEvent;
-
-	public long getTimePutInReadyQueue() {
-		return timePutInReadyQueue;
-	}
-
-	public void setTimePutInReadyQueue(long timePutInReadyQueue) {
-		this.timePutInReadyQueue = timePutInReadyQueue;
-	}
 
 	private long timePutInReadyQueue = 0;
 
@@ -179,5 +132,54 @@ public class Process implements Constants
 		return this.processId;
 	}
 
-	// Add more methods as needed
+    public long getCpuTimeNeeded() {
+        return cpuTimeNeeded;
+    }
+
+    public void setCpuTimeNeeded(long cpuTimeNeeded) {
+        this.cpuTimeNeeded = cpuTimeNeeded;
+    }
+
+    public long getAvgIoInterval() {
+        return avgIoInterval;
+    }
+
+    public long getTimeSpentInReadyQueue() {
+        return timeSpentInReadyQueue;
+    }
+
+    public void setTimeSpentInReadyQueue(long timeSpentInReadyQueue) {
+        this.timeSpentInReadyQueue = timeSpentInReadyQueue;
+    }
+
+    public long getNofTimesInReadyQueue(){
+        return nofTimesInReadyQueue;
+    }
+
+    public long getNofTimesInIoQueue(){
+        return nofTimesInIoQueue;
+    }
+
+    public void increaseNofTimesInReadyQueue(){
+        nofTimesInReadyQueue++;
+    }
+    public void increaseNofTimesInIoQueue(){
+        nofTimesInIoQueue++;
+    }
+
+    public long getTimePutInReadyQueue() {
+        return timePutInReadyQueue;
+    }
+
+    public void setTimePutInReadyQueue(long timePutInReadyQueue) {
+        this.timePutInReadyQueue = timePutInReadyQueue;
+    }
+
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    public void setFirstTimeInReadyQueue(long t){
+        this.firstTimeInReadyQueue = t;
+    }
 }
