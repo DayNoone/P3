@@ -38,6 +38,8 @@ public class Process implements Constants {
      * The amount of cpu time still needed by this process
      */
     private long cpuTimeNeeded;
+    private long timePutInIoQueue;
+    private long timePutInIo;
 
     public long getCreationTime() {
         return creationTime;
@@ -234,6 +236,34 @@ public class Process implements Constants {
 
     public long getTimePutInCPU() {
         return timePutInCPU;
+    }
+
+    public void setTimePutInIoQueue(long timePutInIoQueue) {
+        this.timePutInIoQueue = timePutInIoQueue;
+    }
+
+    public long getTimeSpentWaitingForIo() {
+        return timeSpentWaitingForIo;
+    }
+
+    public long getTimePutInIoQueue() {
+        return timePutInIoQueue;
+    }
+
+    public void setTimeSpentWaitingForIo(long timeSpentWaitingForIo) {
+        this.timeSpentWaitingForIo = timeSpentWaitingForIo;
+    }
+
+    public long getTimeSpentInIo() {
+        return timeSpentInIo;
+    }
+
+    public long getTimePutInIo() {
+        return timePutInIo;
+    }
+
+    public void setTimeSpentInIo(long timeSpentInIo) {
+        this.timeSpentInIo = timeSpentInIo;
     }
 
     // Add more methods as needed

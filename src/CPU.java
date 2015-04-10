@@ -6,6 +6,7 @@ public class CPU {
     private final Queue cpuQueue;
     private Process activeProcess;
     private int longestQueue;
+    private int avgQueueLength;
 
     public int getLongestQueue() {
         return longestQueue;
@@ -61,5 +62,10 @@ public class CPU {
         if (cpuQueue.getQueueLength() > this.longestQueue){
             this.longestQueue = cpuQueue.getQueueLength();
         }
+    }
+
+    public void calculateAvgQueueLength() {
+
+
     }
 }

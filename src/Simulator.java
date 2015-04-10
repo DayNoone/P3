@@ -79,6 +79,8 @@ public class Simulator implements Constants
 			// Let the memory unit and the GUI know that time has passed
 			memory.timePassed(timeDifference);
 			gui.timePassed(timeDifference);
+			cpu.calculateAvgQueueLength();
+
 			// Deal with the event
 			if (clock < simulationLength) {
 				processEvent(event);
@@ -242,6 +244,8 @@ public class Simulator implements Constants
 		statistics.totalTimeSpentInSystem += clock - p.getCreationTime();
 		statistics.totalCpuWaitingTime += p.getTimeSpentInReadyQueue();
 		statistics.totalProcessingTime += p.getTimeSpentInCpu();
+		statistics.totalIoWaitingTime += p.getTimeSpentWaitingForIo();
+		statistics.totalIoProcessingTime += p.getTimeSpentInIo();
 
 
 		cpu.setActiveProcess(null, clock);
@@ -259,9 +263,9 @@ public class Simulator implements Constants
         gui.setCpuActive(null);
 
         if(io.hasActiveProcess()){
-            io.insertQueue(ap);
+            io.insertQueue(ap, clock);
         }else{
-            io.setActiveProcess(ap);
+            io.setActiveProcess(ap, clock);
             gui.setIoActive(ap);
             ap.setCpuTimeNeeded(ap.getCpuTimeNeeded() - avgIoTime - ap.getAvgIoInterval());
 			if (ap.getCpuTimeNeeded() < 0)
@@ -280,14 +284,14 @@ public class Simulator implements Constants
 	private void endIoOperation() {
         statistics.nofCompletedIoProcesses++;
         cpu.insertQueue(io.getActiveProcess(), clock);
-        io.setActiveProcess(null);
+        io.setActiveProcess(null, clock);
         gui.setIoActive(null);
 
         if(!cpu.hasActiveProcess()) switchProcess();
 
         if(!ioQueue.isEmpty()){
             Process nio = (Process) ioQueue.removeNext();
-            io.setActiveProcess(nio);
+            io.setActiveProcess(nio, clock);
             gui.setIoActive(nio);
             eventQueue.insertEvent(new Event(END_IO,clock+ avgIoTime));
 
