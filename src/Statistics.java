@@ -26,7 +26,11 @@ public class Statistics
 
     public long longestIoQueue = 0;
 
+    public long avgCpuQueue = 0;
+
     public long nofTimesInCpuQueue = 0;
+
+    public long avgIoQueue = 0;
 
     public long nofTimesInIoQueue = 0;
 
@@ -89,9 +93,11 @@ public class Statistics
         System.out.println("Largest occuring memory queue length:                         "+memoryQueueLargestLength);
 		System.out.println("Average memory queue length:                                  "+(float)memoryQueueLengthTime/simulationLength);
         System.out.println("Largest occuring cpu queue length:                            "+longestCpuQueue);
-        System.out.println("Average cpu queue length:                                     ");
+        System.out.println("Average cpu queue length:                                     "
+                + avgCpuQueue);
         System.out.println("Largest occuring I/O queue length:                            "+longestIoQueue);
-        System.out.println("Average I/O queue length:                                     ");
+        System.out.println("Average I/O queue length:                                     "
+                + avgIoQueue);
         if(nofCompletedProcesses > 0) {
 			System.out.println("Average # of times a process has been placed in memory queue:  "
                     + 1);
