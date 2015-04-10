@@ -241,6 +241,7 @@ public class Simulator implements Constants
 		statistics.nofTimesInIoQueue += p.getNofTimesInIoQueue();
 		statistics.totalTimeSpentInSystem += clock - p.getCreationTime();
 		statistics.totalCpuWaitingTime += p.getTimeSpentInReadyQueue();
+		statistics.totalProcessingTime += p.getTimeSpentInCpu();
 
 
 		cpu.setActiveProcess(null, clock);
