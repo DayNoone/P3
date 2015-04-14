@@ -207,6 +207,7 @@ public class Simulator implements Constants
             cpu.insertQueue(p, clock);
 
             p.setCpuTimeNeeded(p.getCpuTimeNeeded() - maxCpuTime);
+            p.setTimeToNextIoOperation(p.getTimeToNextIoOperation() - maxCpuTime);
             cpu.setActiveProcess(null, clock);
             gui.setCpuActive(null);
         }
@@ -220,11 +221,11 @@ public class Simulator implements Constants
 //				if (ap.getProcessID() == 1)
 //					System.out.println("Process: " + Long.toString(ap.getProcessID()) + " cpuTimeNeeded: " + Long.toString(ap.getCpuTimeNeeded()));
                 //TODO: Noge e ikkje heilt rett her...
-				if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
-                    eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
-                }
-                else if(ap.getCpuTimeNeeded() > maxCpuTime){
+                //long nextIO = (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4);
+				if(maxCpuTime < ap.getTimeToNextIoOperation() && maxCpuTime < ap.getCpuTimeNeeded()){
                     eventQueue.insertEvent(new Event(SWITCH_PROCESS, clock + maxCpuTime));
+                }else if (ap.getTimeToNextIoOperation() < ap.getCpuTimeNeeded()){
+                    eventQueue.insertEvent(new Event(IO_REQUEST, clock + ap.getTimeToNextIoOperation()));
                 }else{
                     eventQueue.insertEvent(new Event(END_PROCESS, clock + ap.getCpuTimeNeeded()));
                 }
@@ -289,6 +290,10 @@ public class Simulator implements Constants
 	private void endIoOperation() {
         statistics.nofCompletedIoProcesses++;
         cpu.insertQueue(io.getActiveProcess(), clock);
+
+        Process ap = io.getActiveProcess();
+        ap.setTimeToNextIoOperation((long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4));
+
         io.setActiveProcess(null, clock);
         gui.setIoActive(null);
 
@@ -301,6 +306,8 @@ public class Simulator implements Constants
             eventQueue.insertEvent(new Event(END_IO,clock+ avgIoTime));
 
         }
+
+
 
 		// Incomplete
 	}

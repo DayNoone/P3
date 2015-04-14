@@ -266,5 +266,13 @@ public class Process implements Constants {
         this.timePutInReadyQueue = timePutInReadyQueue;
     }
 
+    public long getTimeToNextIoOperation() {
+        return timeToNextIoOperation;
+    }
+
+    public void setTimeToNextIoOperation(long timeToNextIoOperation){
+        this.timeToNextIoOperation = timeToNextIoOperation;
+    }
+
     // Add more methods as needed
 }
