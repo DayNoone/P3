@@ -219,7 +219,7 @@ public class Simulator implements Constants
 
 //				if (ap.getProcessID() == 1)
 //					System.out.println("Process: " + Long.toString(ap.getProcessID()) + " cpuTimeNeeded: " + Long.toString(ap.getCpuTimeNeeded()));
-
+                //TODO: Noge e ikkje heilt rett her...
 				if(ap.getAvgIoInterval() < ap.getCpuTimeNeeded()){
                     eventQueue.insertEvent(new Event(IO_REQUEST, clock + (long) (Math.random() * ap.getAvgIoInterval() * 2 + ap.getAvgIoInterval() / 4)));
                 }
@@ -333,10 +333,10 @@ public class Simulator implements Constants
 
 		if (defaultVals == true){
 			long memorySize = 2048;
-			long maxCpuTime = 500;
+			long maxCpuTime = 200;
 			long avgIoTime = 225;
 			long simulationLength = 250000;
-			long avgArrivalInterval = 5000;
+			long avgArrivalInterval = 500;
 
 			SimulationGui gui = new SimulationGui(memorySize, maxCpuTime, avgIoTime, simulationLength, avgArrivalInterval);
 
