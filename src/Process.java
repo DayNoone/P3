@@ -68,6 +68,7 @@ public class Process implements Constants {
      * The time that this process has spent waiting in the I/O queue
      */
     private long timeSpentWaitingForIo = 0;
+    private long timeSpentWaitingForCpu = 0;
     /**
      * The time that this process has spent performing I/O
      */
@@ -175,6 +176,14 @@ public class Process implements Constants {
 
     public long getTimePutInCPU() {
         return timePutInCPU;
+    }
+
+    public long getTimeSpentWaitingForCpu() {
+        return timeSpentWaitingForCpu;
+    }
+
+    public void setTimeSpentWaitingForCpu(long timeSpentWaitingForCpu) {
+        this.timeSpentWaitingForCpu = timeSpentWaitingForCpu;
     }
 
     public void setTimePutInIoQueue(long timePutInIoQueue) {

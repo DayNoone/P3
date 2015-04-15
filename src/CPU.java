@@ -44,7 +44,7 @@ public class CPU {
             lastActiveProcess = activeProcess;
             activeProcess.setTimePutInCPU(clock);
             this.start = clock;
-            activeProcess.setTimeSpentInReadyQueue(activeProcess.getTimePutInReadyQueue() + clock - activeProcess.getTimePutInReadyQueue());
+            activeProcess.setTimeSpentInReadyQueue(activeProcess.getTimeSpentWaitingForCpu() + clock - activeProcess.getTimePutInReadyQueue());
         }else{
             lastActiveProcess.setTimeSpentInCpu(lastActiveProcess.getTimeSpentInCpu() + clock-lastActiveProcess.getTimePutInCPU());
             this.end = clock;
