@@ -20,12 +20,12 @@ public class IO {
     public void setActiveProcess(Process activeProcess, long clock) {
         this.activeProcess = activeProcess;
         if(activeProcess != null){
-            activeProcess.setTimeSpentWaitingForIo(activeProcess.getTimeSpentWaitingForIo() + clock - activeProcess.getTimePutInIoQueue());
+            activeProcess.setTimeSpentWaitingForIo(activeProcess.getTimeSpentWaitingForIo() + clock - activeProcess.getTimePutInReadyQueue());
             lastActiveProcess = activeProcess;
-            activeProcess.setTimePutInCPU(clock);
+            activeProcess.setTimePutInIo(clock);
 
         }else{
-            lastActiveProcess.setTimeSpentInIo(lastActiveProcess.getTimeSpentInIo() + clock-lastActiveProcess.getTimePutInIo());
+            lastActiveProcess.setTimeSpentInIo(lastActiveProcess.getTimeSpentInIo() + clock - lastActiveProcess.getTimePutInIo());
         }
     }
 

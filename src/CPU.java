@@ -46,7 +46,7 @@ public class CPU {
             this.start = clock;
             activeProcess.setTimeSpentInReadyQueue(activeProcess.getTimePutInReadyQueue() + clock - activeProcess.getTimePutInReadyQueue());
         }else{
-            lastActiveProcess.setTimeSpentInCpu(lastActiveProcess.getTimeSpentInCpu() + clock-lastActiveProcess.getTimePutInCPU());
+            lastActiveProcess.setTimeSpentInCpu(lastActiveProcess.getTimeSpentInCpu() + clock - lastActiveProcess.getTimePutInCPU());
             this.end = clock;
             long runtime = this.end - this.start;
             this.timeProcessed += runtime;

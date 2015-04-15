@@ -39,6 +39,8 @@ public class Process implements Constants {
      */
     private long cpuTimeNeeded;
     private long timePutInIoQueue;
+
+
     private long timePutInIo;
 
     /**
@@ -189,17 +191,24 @@ public class Process implements Constants {
         return timePutInIoQueue;
     }
 
+
+
     public void setTimeSpentWaitingForIo(long timeSpentWaitingForIo) {
         this.timeSpentWaitingForIo = timeSpentWaitingForIo;
+    }
+
+    public long getTimePutInIo() {
+        return timePutInIo;
+    }
+
+    public void setTimePutInIo(long timePutInIo) {
+        this.timePutInIo = timePutInIo;
     }
 
     public long getTimeSpentInIo() {
         return timeSpentInIo;
     }
 
-    public long getTimePutInIo() {
-        return timePutInIo;
-    }
 
     public void setTimeSpentInIo(long timeSpentInIo) {
         this.timeSpentInIo = timeSpentInIo;
